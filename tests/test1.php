@@ -9,7 +9,8 @@ use PHPTable\Manipulator\Base;
 
 include('data.php');
 
-$table = new \PHPTable\Format\HumanOnly;
+$tablemaker = new \PHPTable\Factory();
+$table = $tablemaker->make('human-only');
 $table->setTableColor('blue');
 $table->setHeaderColor('cyan');
 $table->addField('First Name', 'firstName',    false,                               'white');

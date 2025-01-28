@@ -9,7 +9,9 @@ use \PHPTable\Manipulator\Base;
 
 include('data.php');
 
-$table = new Table;
+$tablemaker = new \PHPTable\Factory();
+$table = $tablemaker->make('human-only');
+
 $table->setChars(array(
     'top'          => '-',
     'top-mid'      => '+',
