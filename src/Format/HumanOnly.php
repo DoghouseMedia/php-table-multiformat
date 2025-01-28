@@ -54,13 +54,13 @@ class HumanOnly extends Base {
 
 
     /**
-     * getTableSeperator
+     * getTableSeparator
      *
      * @access protected
      * @param  array   $columnLengths
      * @return string
      */
-    protected function getTableSeperator($columnLengths) {
+    protected function getTableSeparator($columnLengths) {
         $response = $this->getChar('left-mid');
         foreach ($columnLengths as $length) {
             $response .= $this->getChar('mid', $length + 2);
@@ -169,7 +169,7 @@ class HumanOnly extends Base {
 		$response .= $this->getTableTop($columnLengths);
 		if ($this->getShowHeaders()) {
 			$response .= $this->getFormattedRow($headerData, $columnLengths, true);
-			$response .= $this->getTableSeperator($columnLengths);
+			$response .= $this->getTableSeparator($columnLengths);
 		}
 
 		foreach ($cellData as $row) {
@@ -193,7 +193,7 @@ class HumanOnly extends Base {
 	protected function getFormattedRow($rowData, $columnLengths, $header = false) {
 		if (is_scalar($rowData)) {
 			if (preg_match("/^-+$/", $rowData)) {
-				$response = $this->getTableSeperator($columnLengths); // Developer couldn't spell separator
+				$response = $this->getTableSeparator($columnLengths); // Developer couldn't spell separator
 			} else {
 				warn("Warning: Unknown scalar row data: '$rowData'\n");
 			}
@@ -218,7 +218,6 @@ class HumanOnly extends Base {
 	protected function getFormattedLine($rowData, $count, $columnLengths, $header = false) {
 		$response = $this->getChar('left');
 
-print "Row\n";
 		foreach ($rowData as $key => $field) {
 			$color = NULL;
 			$fieldValue = NULL;
@@ -239,7 +238,6 @@ print "Row\n";
 
 			$fieldLength  = mb_strwidth($fieldValue) + 1;
 			$fieldValue   = ' '.($this->getUseColors() ? $this->getColorFromName($color) : '').$fieldValue;
-print "\tAdded '$fieldValue'\n";
 			$response    .= $fieldValue;
 
 			for ($x = $fieldLength; $x < ($columnLengths[$key] + 2); $x++) {

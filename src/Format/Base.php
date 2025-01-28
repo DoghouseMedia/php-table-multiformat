@@ -377,7 +377,7 @@ abstract class Base {
                     foreach ($this->fields as $field) {
                         $key   = $field['key'];
                         $value = $row[$key];
-                        if ($field['manipulator'] instanceof CliTableManipulator) {
+                        if ($field['manipulator'] instanceof \PHPTable\Manipulator\Base) {
                             $value = trim($field['manipulator']->manipulate($value, $row, $field['name']));
                         }
 
@@ -422,7 +422,7 @@ abstract class Base {
         $response .= $spacing . $this->getTableTop($columnLengths);
         if ($this->getShowHeaders()) {
             $response .= $spacing . $this->getFormattedRow($headerData, $columnLengths, true);
-            $response .= $spacing . $this->getTableSeperator($columnLengths);
+            $response .= $spacing . $this->getTableSeparator($columnLengths);
         }
 
         foreach ($cellData as $row) {
@@ -504,13 +504,13 @@ abstract class Base {
 
 
     /**
-     * getTableSeperator
+     * getTableSeparator
      *
      * @access protected
      * @param  array   $columnLengths
      * @return string
      */
-    protected function getTableSeperator($columnLengths) {	return ''; }
+    protected function getTableSeparator($columnLengths) {	return ''; }
 
 
     /**
