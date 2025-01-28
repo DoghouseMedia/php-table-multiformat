@@ -1,11 +1,11 @@
 # Table of contents
 
-- [\jc21\CliTable](#class-jc21clitable)
-- [\jc21\CliTableManipulator](#class-jc21clitablemanipulator)
+- [\PHPTable\Format\HumanOnly](#class-phptable-format-humanonly)
+- [\PHPTable\Manipulator\Base](#class-phptable-manipulator-base)
 
 <hr /> 
 
-## Class: \jc21\CliTable
+## Class: \PHPTable\Format\HumanOnly
 
 | Visibility | Function |
 |:-----------|:---------|
@@ -36,7 +36,7 @@
 
 <hr /> 
 
-## Class: \jc21\CliTableManipulator
+## Class: \PHPTable\Manipulator\Base
 
 | Visibility | Function |
 |:-----------|:---------|

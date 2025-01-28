@@ -1,4 +1,4 @@
-CLI Table Output for PHP
+Table Handling for PHP
 ================================================
 
 ![Example](example.png)
@@ -20,7 +20,7 @@ curl -sS https://getcomposer.org/installer | php
 Next, run the Composer command to install the latest stable version:
 
 ```bash
-composer.phar require jc21/clitable
+composer.phar require tnelson-doghouse/php-table
 ```
 
 After installing, you need to require Composer's autoloader:
@@ -36,19 +36,19 @@ require 'vendor/autoload.php';
 See the tests folder for some examples, but basically here's how to use it:
 
 ```php
-use jc21\CliTable;
+use \PHPTable\Format\HumanOnly;
 
 // $data used below is an array of rows with fields. See tests/data.php for an example.
 
-$table = new CliTable;
+$table = new \PHPTable\Format\HumanOnly;
 $table->setTableColor('blue');
 $table->setHeaderColor('cyan');
 $table->addField('First Name', 'firstName',    false,                               'white');
 $table->addField('Last Name',  'lastName',     false,                               'white');
-$table->addField('DOB',        'dobTime',      new CliTableManipulator('datelong'));
-$table->addField('Admin',      'isAdmin',      new CliTableManipulator('yesno'),    'yellow');
-$table->addField('Last Seen',  'lastSeenTime', new CliTableManipulator('nicetime'), 'red');
-$table->addField('Expires',    'expires',      new CliTableManipulator('duetime'),  'green');
+$table->addField('DOB',        'dobTime',      new \PHPTable\Manipulator\Base('datelong'));
+$table->addField('Admin',      'isAdmin',      new \PHPTable\Manipulator\Base('yesno'),    'yellow');
+$table->addField('Last Seen',  'lastSeenTime', new \PHPTable\Manipulator\Base('nicetime'), 'red');
+$table->addField('Expires',    'expires',      new \PHPTable\Manipulator\Base('duetime'),  'green');
 $table->injectData($data);
 $table->display();
 ```
@@ -78,22 +78,22 @@ These are the manipulators provided in the package:
 If you want to create your own manipulators:
 
 ```php
-class MyManipulator extends CliTableManipulator {
+class MyManipulator extends \PHPTable\Manipulator\Base {
 	public function chucknorris($value)
 	{
 		return 'Chuck norris said: ' . $value;
 	}
 }
 
-$table = new CliTable;
+$table = new \PHPTable\Format\HumanOnly;
 $table->setTableColor('blue');
 $table->setHeaderColor('cyan');
 $table->addField('First Name', 'firstName',    false,                               'white');
 $table->addField('Last Name',  'lastName',     false,                               'white');
-$table->addField('DOB',        'dobTime',      new CliTableManipulator('datelong'));
+$table->addField('DOB',        'dobTime',      new \PHPTable\Manipulator\Base('datelong'));
 $table->addField('Admin',      'isAdmin',      new MyManipulator('chucknorris'),    'yellow');
-$table->addField('Last Seen',  'lastSeenTime', new CliTableManipulator('nicetime'), 'red');
-$table->addField('Expires',    'expires',      new CliTableManipulator('duetime'),  'green');
+$table->addField('Last Seen',  'lastSeenTime', new \PHPTable\Manipulator\Base('nicetime'), 'red');
+$table->addField('Expires',    'expires',      new \PHPTable\Manipulator\Base('duetime'),  'green');
 $table->injectData($data);
 $table->display();
 ```

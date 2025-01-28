@@ -4,21 +4,21 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use jc21\CliTable;
-use jc21\CliTableManipulator;
+use PHPTable\Table;
+use PHPTable\Manipulator\Base;
 
 include('data.php');
 
-$table = new CliTable;
+$table = new \PHPTable\Format\HumanOnly;
 $table->setTableColor('blue');
 $table->setHeaderColor('cyan');
 $table->addField('First Name', 'firstName',    false,                               'white');
 $table->addField('Last Name',  'lastName',     false,                               'white');
 $table->addField('Hobbies',    'hobbies');
-$table->addField('DOB',        'dobTime',      new CliTableManipulator('datelong'));
-$table->addField('Admin',      'isAdmin',      new CliTableManipulator('yesno'),    'yellow');
-$table->addField('Last Seen',  'lastSeenTime', new CliTableManipulator('nicetime'), 'red');
-$table->addField('Expires',    'expires',      new CliTableManipulator('duetime'),  'green');
+$table->addField('DOB',        'dobTime',      new \PHPTable\Manipulator\Base('datelong'));
+$table->addField('Admin',      'isAdmin',      new \PHPTable\Manipulator\Base('yesno'),    'yellow');
+$table->addField('Last Seen',  'lastSeenTime', new \PHPTable\Manipulator\Base('nicetime'), 'red');
+$table->addField('Expires',    'expires',      new \PHPTable\Manipulator\Base('duetime'),  'green');
 $table->injectData($data);
 $table->display();
 

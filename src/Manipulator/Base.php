@@ -6,13 +6,15 @@
 // +---------------------------------------------------------------+
 // | Licence: MIT                                                  |
 // +---------------------------------------------------------------+
-// | Copyright: Jamie Curnow  <jc@jc21.com>                        |
+// | Copyright:                                                    |
+// |     Jamie Curnow  <jc@jc21.com>                               |
+// |     Tim Nelson <tnelson@doghouse.agency>                      |
 // +---------------------------------------------------------------+
 //
 
-namespace jc21;
+namespace PHPTable\Manipulator;
 
-class CliTableManipulator {
+class Base {
 
     /**
      * Stores the type of manipulation to perform
