@@ -5,7 +5,7 @@
 namespace PHPTable\Format;
 
 // Half-human format -- tabular, but with no separating lines, and headers have spaces turned to '_'.  Unix-like.  
-class	HalfHumanCliTable extends GenericTable {
+class	HalfHuman extends Base {
 	protected function getFormattedRow($rowData, $columnLengths, $header = false) {
 		$response = '';
 		foreach ($rowData as $key => $field) {
@@ -18,7 +18,8 @@ class	HalfHumanCliTable extends GenericTable {
 			$fieldLength  = mb_strwidth($fieldValue) + 1;
 			$response    .= $fieldValue;
 
-			$response .= str_repeat(' ', ($columnLengths[$key] + 2) - $fieldLength);
+			$times = max(0, ($columnLengths[$key] + 2) - $fieldLength);
+			$response .= str_repeat(' ', $times);
 		}
 
 		$response = $response . PHP_EOL;

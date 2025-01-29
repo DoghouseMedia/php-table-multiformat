@@ -404,7 +404,14 @@ abstract class Base {
 
         $response = '';
 
-        $screenWidth = trim(exec("tput cols"));
+        // Get the screen width (Windows vs. others)
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            $screenWidthCommand = 'mode con | findstr Columns';
+            $screenWidth = trim(exec($screenWidthCommand));
+            $screenWidth = preg_match('/\d+/', $screenWidth, $matches);;
+        } else {
+            $screenWidth = trim(exec("tput cols"));
+        }
 
         // Idea here is we're column the accumulated length of the data
         // Then adding the quantity of column lengths to accommodate for the extra characters

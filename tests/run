@@ -1,0 +1,7 @@
+#!/bin/bash
+
+for i in tests/test*.php; do
+	echo
+	echo === $i ===
+	php $i
+done
