@@ -1,11 +1,11 @@
 # Table of contents
 
-- [\jc21\CliTable](#class-jc21clitable)
-- [\jc21\CliTableManipulator](#class-jc21clitablemanipulator)
+- [\PHPTable\Format\HumanOnly](#class-phptable-format-humanonly)
+- [\PHPTable\Manipulator\Base](#class-phptable-manipulator-base)
 
 <hr /> 
 
-## Class: \jc21\CliTable
+## Class: \PHPTable\Format\HumanOnly
 
 | Visibility | Function |
 |:-----------|:---------|
@@ -31,12 +31,12 @@
 | protected | <strong>getFormattedRow(</strong><em>array</em> <strong>$rowData</strong>, <em>array</em> <strong>$columnLengths</strong>, <em>bool</em> <strong>$header=false</strong>)</strong> : <em>string</em><br /><em>getFormattedRow</em> |
 | protected | <strong>getPluralItemName()</strong> : <em>string</em><br /><em>getPluralItemName</em> |
 | protected | <strong>getTableBottom(</strong><em>array</em> <strong>$columnLengths</strong>)</strong> : <em>string</em><br /><em>getTableBottom</em> |
-| protected | <strong>getTableSeperator(</strong><em>array</em> <strong>$columnLengths</strong>)</strong> : <em>string</em><br /><em>getTableSeperator</em> |
+| protected | <strong>getTableSeparator(</strong><em>array</em> <strong>$columnLengths</strong>)</strong> : <em>string</em><br /><em>getTableSeparator</em> |
 | protected | <strong>getTableTop(</strong><em>array</em> <strong>$columnLengths</strong>)</strong> : <em>string</em><br /><em>getTableTop</em> |
 
 <hr /> 
 
-## Class: \jc21\CliTableManipulator
+## Class: \PHPTable\Manipulator\Base
 
 | Visibility | Function |
 |:-----------|:---------|

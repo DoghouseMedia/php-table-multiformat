@@ -10,7 +10,7 @@ use PHPTable\Manipulator\Base;
 include('data.php');
 
 $tablemaker = new \PHPTable\Factory();
-$table = $tablemaker->make('human-only');
+$table = $tablemaker->make('csv');
 $table->setTableColor('blue');
 $table->setHeaderColor('cyan');
 $table->addField('First Name', 'firstName',    false,                               'white');

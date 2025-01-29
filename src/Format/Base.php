@@ -1,18 +1,21 @@
 <?php
 // +---------------------------------------------------------------+
-// | CLI Table Class                                               |
+// | Base Table Class                                              |
 // +---------------------------------------------------------------+
-// | Nice output for PHP scripts on the command line               |
+// | Parent for all the other table classes                        |
 // +---------------------------------------------------------------+
 // | Licence: MIT                                                  |
 // +---------------------------------------------------------------+
-// | Copyright: Jamie Curnow  <jc@jc21.com>                        |
+// | Copyright:                                                    |
+// |     Jamie Curnow  <jc@jc21.com>                               |
+// |     Tim Nelson <tnelson@doghouse.agency>                      |
 // +---------------------------------------------------------------+
 //
 
-namespace jc21;
 
-class CliTable {
+namespace PHPTable\Format;
+
+abstract class Base {
 
     /**
      * Table Data
@@ -57,7 +60,7 @@ class CliTable {
      * @access protected
      *
      **/
-    protected $useColors = true;
+    protected $useColors = false;
 
     /**
      * Center content?
@@ -374,7 +377,7 @@ class CliTable {
                     foreach ($this->fields as $field) {
                         $key   = $field['key'];
                         $value = $row[$key];
-                        if ($field['manipulator'] instanceof CliTableManipulator) {
+                        if ($field['manipulator'] instanceof \PHPTable\Manipulator\Base) {
                             $value = trim($field['manipulator']->manipulate($value, $row, $field['name']));
                         }
 
@@ -401,7 +404,14 @@ class CliTable {
 
         $response = '';
 
-        $screenWidth = trim(exec("tput cols"));
+        // Get the screen width (Windows vs. others)
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            $screenWidthCommand = 'mode con | findstr Columns';
+            $screenWidth = trim(exec($screenWidthCommand));
+            $screenWidth = preg_match('/\d+/', $screenWidth, $matches);;
+        } else {
+            $screenWidth = trim(exec("tput cols"));
+        }
 
         // Idea here is we're column the accumulated length of the data
         // Then adding the quantity of column lengths to accommodate for the extra characters
@@ -419,7 +429,7 @@ class CliTable {
         $response .= $spacing . $this->getTableTop($columnLengths);
         if ($this->getShowHeaders()) {
             $response .= $spacing . $this->getFormattedRow($headerData, $columnLengths, true);
-            $response .= $spacing . $this->getTableSeperator($columnLengths);
+            $response .= $spacing . $this->getTableSeparator($columnLengths);
         }
 
         foreach ($cellData as $row) {
@@ -487,15 +497,7 @@ class CliTable {
      * @param  array   $columnLengths
      * @return string
      */
-    protected function getTableTop($columnLengths) {
-        $response = $this->getChar('top-left');
-        foreach ($columnLengths as $length) {
-            $response .= $this->getChar('top', $length + 2);
-            $response .= $this->getChar('top-mid');
-        }
-        $response = substr($response, 0, strlen($response) - 3) . $this->getChar('top-right') . PHP_EOL;
-        return $response;
-    }
+    protected function getTableTop($columnLengths) {	return ''; }
 
 
     /**
@@ -505,33 +507,17 @@ class CliTable {
      * @param  array   $columnLengths
      * @return string
      */
-    protected function getTableBottom($columnLengths) {
-        $response = $this->getChar('bottom-left');
-        foreach ($columnLengths as $length) {
-            $response .= $this->getChar('bottom', $length + 2);
-            $response .= $this->getChar('bottom-mid');
-        }
-        $response = substr($response, 0, strlen($response) - 3) . $this->getChar('bottom-right') . PHP_EOL;
-        return $response;
-    }
+    protected function getTableBottom($columnLengths) {	return ''; }
 
 
     /**
-     * getTableSeperator
+     * getTableSeparator
      *
      * @access protected
      * @param  array   $columnLengths
      * @return string
      */
-    protected function getTableSeperator($columnLengths) {
-        $response = $this->getChar('left-mid');
-        foreach ($columnLengths as $length) {
-            $response .= $this->getChar('mid', $length + 2);
-            $response .= $this->getChar('mid-mid');
-        }
-        $response = substr($response, 0, strlen($response) - 3) . $this->getChar('right-mid') . PHP_EOL;
-        return $response;
-    }
+    protected function getTableSeparator($columnLengths) {	return ''; }
 
 
     /**
@@ -542,19 +528,7 @@ class CliTable {
      * @param  int     $length
      * @return string
      */
-    protected function getChar($type, $length = 1) {
-        $response = '';
-        if (isset($this->chars[$type])) {
-            if ($this->getUseColors()) {
-                $response .= $this->getColorFromName($this->getTableColor());
-            }
-            $char = trim($this->chars[$type]);
-            for ($x = 0; $x < $length; $x++) {
-                $response .= $char;
-            }
-        }
-        return $response;
-    }
+    protected function getChar($type, $length = 1) {	return ''; }
 
 
     /**
@@ -587,13 +561,7 @@ class CliTable {
      * @param  string  $colorName
      * @return string
      */
-    protected function getColorFromName($colorName)
-    {
-        if (isset($this->colors[$colorName])) {
-            return $this->colors[$colorName];
-        }
-        return $this->colors['reset'];
-    }
+    protected function getColorFromName($colorName) {	return ''; }
 
 
     /**

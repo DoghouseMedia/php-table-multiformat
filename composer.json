@@ -1,25 +1,29 @@
 {
-    "name": "jc21/clitable",
+    "name": "tnelson-doghouse/php-table",
     "description": "CLI Table output for PHP scripts",
     "keywords": ["cli", "table", "command", "line"],
-    "homepage": "https://github.com/jc21/clitable",
+    "homepage": "https://github.com/tnelson-doghouse/php-table",
     "license": "BSD-1-Clause",
     "authors": [
         {
             "name": "Jamie Curnow",
             "email": "jc@jc21.com"
+        },
+        {
+            "name": "Tim Nelson",
+            "email": "tnelson@doghouse.agency"
         }
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": ">=5.3.0"
+        "php": ">=8.0.0"
     },
     "require-dev": {
         "victorjonsson/markdowndocs": "dev-master"
     },
     "autoload": {
-        "psr-0": {
-            "jc21": "src"
+        "psr-4": {
+            "PHPTable\\": "src"
         }
     }
 }
