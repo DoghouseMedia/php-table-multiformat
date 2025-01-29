@@ -2,7 +2,7 @@
 
 namespace PHPTable\Manipulator;
 
-// For CliTable; text with limited width
+// Text with limited width
 class	TextWidth extends Base {
 	protected	int	$max_width;
 	protected	string	$wrapping;

@@ -15,7 +15,7 @@ class	Cell {
 			$value = $input['value'];
 			$this->color = $input['color'];
 		}
-		if ($field['manipulator'] instanceof CliTableManipulator) {
+		if ($field['manipulator'] instanceof \PHPTable\Manipulator\Base) {
 			$rv = $field['manipulator']->manipulate($value, $row, $field['name']);
 			$rv = is_scalar($rv) ? [$rv] : $rv;
 			$this->rows = array_map(

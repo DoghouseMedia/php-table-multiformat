@@ -40,7 +40,8 @@ use \PHPTable\Format\HumanOnly;
 
 // $data used below is an array of rows with fields. See tests/data.php for an example.
 
-$table = new \PHPTable\Format\HumanOnly;
+$tablemaker = new \PHPTable\Factory();
+$table = $tablemaker->make('human-only');
 $table->setTableColor('blue');
 $table->setHeaderColor('cyan');
 $table->addField('First Name', 'firstName',    false,                               'white');
@@ -85,7 +86,8 @@ class MyManipulator extends \PHPTable\Manipulator\Base {
 	}
 }
 
-$table = new \PHPTable\Format\HumanOnly;
+$tablemaker = new \PHPTable\Factory();
+$table = $tablemaker->make('human-only');
 $table->setTableColor('blue');
 $table->setHeaderColor('cyan');
 $table->addField('First Name', 'firstName',    false,                               'white');
@@ -97,3 +99,24 @@ $table->addField('Expires',    'expires',      new \PHPTable\Manipulator\Base('d
 $table->injectData($data);
 $table->display();
 ```
+
+#### Manipulator\TextWidth
+
+This manipulator allows for fixed-width columns; it can clip or wrap, as desired.
+
+```php
+$wrapper = new \PHPTable\Manipulator\TextWidth(
+	max_width: 30,
+	wrapping: 'clip',
+);
+```
+
+### Formats
+
+Currently supported formats are:
+* human-only (HumanOnly): Pretty, aesthetically pleasing, but not machine readable; uses ANSI Escape sequences for colour, etc
+* half-human (HalfHuman): Like a Unix command; in a table, but should be somewhat machine readable (specifically, columns split on space should work).  Not well done yet, but works in some cases
+* csv (CSVTable): Outputs to a CSV file
+
+The advantage of using the Factory is that the format can then be eg. a string passed on the command line, so that people can choose to have their report in eg. human-readable or CSV.
+
