@@ -6,7 +6,7 @@ class	Cell {
 	public		$rows = [];
 	public		$color = NULL;
 
-	function	__construct($field, $row, $key) {
+	function	__construct($field, $row, string $key) {
 		$input = array_key_exists($key, $row) ? $row[$key] : '';
 		if(is_scalar($input) or $input == NULL) {
 			$value = $input;
@@ -23,7 +23,7 @@ class	Cell {
 				$rv
 			);
 		} else {
-			$lines = explode(PHP_EOL, $value);
+			$lines = explode(PHP_EOL, $value == NULL ? '' : $value);
 			array_push($this->rows, ...$lines);
 		}
 	}
@@ -36,5 +36,9 @@ class	Cell {
 
 	function	get_lines() {
 		return count($this->rows);
+	}
+
+	function	__toString() {
+		return implode(PHP_EOL, $this->rows);
 	}
 }

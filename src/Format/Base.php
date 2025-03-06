@@ -369,49 +369,37 @@ abstract class Base {
         }
 
         // Data
-        if ($this->injectedData !== null) {
-            if (count($this->injectedData)) {
-                foreach ($this->injectedData as $row) {
-                    // Row
-                    $cellData[$rowCount] = array();
-                    foreach ($this->fields as $field) {
-                        $key   = $field['key'];
-                        $value = $row[$key];
-                        if ($field['manipulator'] instanceof \PHPTable\Manipulator\Base) {
-                            $value = trim($field['manipulator']->manipulate($value, $row, $field['name']));
-                        }
-
-                        $cellData[$rowCount][$key] = $value;
-
-                        // Column Lengths
-                        if (!isset($columnLengths[$key])) {
-                            $columnLengths[$key] = 0;
-                        }
-                        $c = chr(27);
-                        $lines = explode("\n", preg_replace("/({$c}\[(.*?)m)/s", '', $value));
-                        foreach ($lines as $line) {
-                            $columnLengths[$key] = max($columnLengths[$key], mb_strlen($line));
-                        }
-                    }
-                    $rowCount++;
-                }
+		if ($this->injectedData === null) {
+			return 'There is no injected data for the table!' . PHP_EOL;
+		}
+		if (! count($this->injectedData)) {
+			return 'There are no '.$this->getPluralItemName() . PHP_EOL;
+		}
+        foreach ($this->injectedData as $row) {
+            // Row
+			if(is_scalar($row)) {
+                $cellData[$rowCount] = $row;
             } else {
-                return 'There are no '.$this->getPluralItemName() . PHP_EOL;
+                $cellData[$rowCount] = array();
+                foreach ($this->fields as $field) {
+                    $key   = $field['key'];
+                    $cellObj = new \PHPTable\Cell($field, $row, $key);
+                    $cellData[$rowCount][$key] = $cellObj;
+
+                    // Column Lengths
+                    if (!isset($columnLengths[$key])) {
+                        $columnLengths[$key] = 0;
+                    }
+                    $columnLengths[$key] = max($columnLengths[$key], $cellObj->get_width());
+                }
             }
-        } else {
-            return 'There is no injected data for the table!' . PHP_EOL;
+            $rowCount++;
         }
 
         $response = '';
 
-        // Get the screen width (Windows vs. others)
-        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-            $screenWidthCommand = 'mode con | findstr Columns';
-            $screenWidth = trim(exec($screenWidthCommand));
-            $screenWidth = preg_match('/\d+/', $screenWidth, $matches);;
-        } else {
-            $screenWidth = trim(exec("tput cols"));
-        }
+        // Get the screen width
+        $screenWidth = $this->getScreenWidth();
 
         // Idea here is we're column the accumulated length of the data
         // Then adding the quantity of column lengths to accommodate for the extra characters
@@ -439,6 +427,18 @@ abstract class Base {
         $response .= $spacing . $this->getTableBottom($columnLengths);
 
         return $response;
+    }
+
+    // Get the screen width (Windows vs. others)
+    protected function getScreenWidth() {
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            $screenWidthCommand = 'mode con | findstr Columns';
+            $screenWidth = trim(exec($screenWidthCommand));
+            $screenWidth = preg_match('/\d+/', $screenWidth, $matches);;
+        } else {
+            $screenWidth = trim(exec("tput cols"));
+        }
+        return $screenWidth;
     }
 
 
