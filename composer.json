@@ -1,17 +1,17 @@
 {
-    "name": "tnelson-doghouse/php-table",
-    "description": "CLI Table output for PHP scripts",
+    "name": "DoghouseMedia/php-table-multiformat",
+    "description": "Table output for PHP scripts (CLI, CSV, etc)",
     "keywords": ["cli", "table", "command", "line"],
-    "homepage": "https://github.com/tnelson-doghouse/php-table",
+    "homepage": "https://github.com/DoghouseMedia/php-table-multiformat",
     "license": "BSD-1-Clause",
     "authors": [
         {
-            "name": "Jamie Curnow",
-            "email": "jc@jc21.com"
-        },
-        {
             "name": "Tim Nelson",
             "email": "tnelson@doghouse.agency"
+        },
+        {
+            "name": "Jamie Curnow",
+            "email": "jc@jc21.com"
         }
     ],
     "minimum-stability": "dev",
