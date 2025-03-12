@@ -1,5 +1,5 @@
 {
-    "name": "DoghouseMedia/php-table-multiformat",
+    "name": "doghouse/php-table-multiformat",
     "description": "Table output for PHP scripts (CLI, CSV, etc)",
     "keywords": ["cli", "table", "command", "line"],
     "homepage": "https://github.com/DoghouseMedia/php-table-multiformat",
